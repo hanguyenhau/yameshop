@@ -5,6 +5,7 @@ import com.yameshopbe.dao.UserDao;
 import com.yameshopbe.entity.Role;
 import com.yameshopbe.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
@@ -17,6 +18,8 @@ public class UserService {
     private UserDao userDao;
     @Autowired
     private RoleDao roleDao;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     public User registerNewUser(User user){
         return userDao.save(user);
@@ -37,7 +40,7 @@ public class UserService {
         adminUser.setUserFirstName("admin");
         adminUser.setUserLastName("admin");
         adminUser.setUserName("admin123");
-        adminUser.setUserPassword("123");
+        adminUser.setUserPassword(getEncodePassword("123"));
         Set<Role> adminRoles = new HashSet<>();
         adminRoles.add(adminRole);
         adminUser.setRole(adminRoles);
@@ -47,10 +50,14 @@ public class UserService {
         user.setUserFirstName("hau");
         user.setUserLastName("ha");
         user.setUserName("hau");
-        user.setUserPassword("123");
+        user.setUserPassword(getEncodePassword("123"));
         Set<Role> userRoles = new HashSet<>();
         userRoles.add(userRole);
         user.setRole(userRoles);
         userDao.save(user);
+    }
+
+    public String getEncodePassword(String password){
+        return passwordEncoder.encode(password);
     }
 }

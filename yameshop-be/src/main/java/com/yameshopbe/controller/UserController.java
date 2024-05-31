@@ -4,10 +4,7 @@ import com.yameshopbe.entity.User;
 import com.yameshopbe.service.UserService;
 import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class UserController {
@@ -23,5 +20,15 @@ public class UserController {
     @PostMapping({"/registerNewUser"})
     public User registerNewUser(@RequestBody User user){
         return userService.registerNewUser(user);
+    }
+
+    @GetMapping({"/forAdmin"})
+    public String forAdmin(){
+        return "this URL is only accessible to admin";
+    }
+
+    @GetMapping({"/forUser"})
+    public String forUser(){
+        return "this URL is only accessible to admin";
     }
 }
